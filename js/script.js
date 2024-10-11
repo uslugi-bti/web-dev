@@ -89,6 +89,8 @@ var increment = function () {
 window.addEventListener("load", increment);
 window.addEventListener("scroll", increment);
 
+const mainLink = document.querySelector(".fullscreen__link");
+
 const linkAbout = document.querySelector(".header__item #about");
 const linkServices = document.querySelector(".header__item #services");
 const linkPortfolio = document.querySelector(".header__item #portfolio");
@@ -108,6 +110,11 @@ window.addEventListener("scroll", function () {
     } else {
         anchorUp.classList.remove("show");
     }
+});
+
+mainLink.addEventListener("click", function (event) {
+    targetContacts.scrollIntoView({ behavior: 'smooth' });
+    event.preventDefault();
 });
 
 anchorUp.addEventListener("click", function () {
