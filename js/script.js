@@ -88,3 +88,73 @@ var increment = function () {
 
 window.addEventListener("load", increment);
 window.addEventListener("scroll", increment);
+
+const linkAbout = document.querySelector(".header__item #about");
+const linkServices = document.querySelector(".header__item #services");
+const linkPortfolio = document.querySelector(".header__item #portfolio");
+const linkContacts = document.querySelector(".header__item #contacts");
+
+const targetAbout = document.querySelector(".about");
+const targetServices = document.querySelector(".services");
+const targetGallery = document.querySelector(".portfolio");
+const targetContacts = document.querySelector(".contacts");
+
+const targetAnchor = document.querySelector(".fullscreen");
+const anchorUp = document.querySelector(".anchor");
+
+window.addEventListener("scroll", function () {
+    if (window.scrollY > window.outerHeight) {
+        anchorUp.classList.add("show");
+    } else {
+        anchorUp.classList.remove("show");
+    }
+});
+
+anchorUp.addEventListener("click", function () {
+    targetAnchor.scrollIntoView({ behavior: "smooth" });
+});
+
+linkAbout.addEventListener('click', function() {
+    targetAbout.scrollIntoView({ behavior: 'smooth' });
+});
+linkServices.addEventListener('click', function() {
+    targetServices.scrollIntoView({ behavior: 'smooth' });
+});
+linkPortfolio.addEventListener('click', function() {
+    targetGallery.scrollIntoView({ behavior: 'smooth' });
+});
+linkContacts.addEventListener('click', function() {
+    targetContacts.scrollIntoView({ behavior: 'smooth' });
+});
+
+function removeActiveClass() {
+    document.querySelectorAll('.header__item a').forEach(link => {
+        link.classList.remove('active');
+    });
+}
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            removeActiveClass();
+            
+            if (entry.target === document.querySelector("fullscreen")) {
+                removeActiveClass();
+            } else if (entry.target === document.querySelector(".about__image")) {
+                linkAbout.classList.add('active');
+            } else if (entry.target === targetServices) {
+                linkServices.classList.add('active');
+            } else if (entry.target === targetGallery) {
+                linkPortfolio.classList.add('active');
+            } else if (entry.target === targetContacts) {
+                linkContacts.classList.add('active');
+            }
+        }
+    });
+}, { threshold: 0.5 });
+
+observer.observe(document.querySelector(".fullscreen"));
+observer.observe(document.querySelector(".about__image"));
+observer.observe(targetServices);
+observer.observe(targetGallery);
+observer.observe(targetContacts);
